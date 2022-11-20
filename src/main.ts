@@ -5,7 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: process.env.PROD_URL || 'http://localhost:3000',
+    origin: process.env.PROD_URL || 'https://sigvet-app.com.br',
   });
 
   app.setGlobalPrefix('/api');
