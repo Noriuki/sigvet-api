@@ -28,9 +28,13 @@ export class AppointmentController extends CreateBaseClass(AppointmentDto) {
   async getAllByUserId(@Param('id') id: number) {
     return await this.appointmentService.getAllByUserId(id);
   }
-  @Get('detail/:id')
-  async getOneDetails(@Res() res: Response, @Param('id') id: number) {
-    const result = await this.appointmentService.getOneDetails(id);
+  @Get('detail/:id/:clinicId')
+  async getOneDetails(
+    @Res() res: Response,
+    @Param('id') id: number,
+    @Param('clinicId') clinicId: number,
+  ) {
+    const result = await this.appointmentService.getOneDetails(id, clinicId);
     return res.json({ success: true, result });
   }
 }
