@@ -47,7 +47,13 @@ export class AppointmentService extends BaseService<Appointment> {
 
   async getOneDetails(id: number, clinicId: number) {
     return await this.appointmentRepository.findOne({
-      relations: ['animal', 'animal.species', 'animal.race', 'user'],
+      relations: [
+        'animal',
+        'animal.species',
+        'animal.race',
+        'user',
+        'services',
+      ],
       where: {
         id,
         clinicId,

@@ -231,6 +231,7 @@ export class SeedService implements OnApplicationBootstrap {
       appointment.status = AppointmentStatus.open;
       appointment.payment_status = PaymentStatus.open;
       appointment.price = 100.0;
+      appointment.base_price = 100.0;
       appointment.animal = animal[0];
       appointment.user = user[0];
       appointment.clinicId = clinicId;
@@ -249,6 +250,7 @@ export class SeedService implements OnApplicationBootstrap {
       service.date = '2022-10-19';
 
       const service2 = new Service();
+      service.appointmentId = appointmentId;
       service2.price = 30.99;
       service.appointment = appointment;
       service2.clinicId = clinicId;

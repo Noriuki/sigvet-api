@@ -66,6 +66,11 @@ export class Appointment extends BaseEntity {
   @Column({
     type: 'float',
   })
+  base_price: number;
+
+  @Column({
+    type: 'float',
+  })
   price: number;
 
   @OneToMany(() => Service, (service) => service.appointment)
@@ -102,6 +107,9 @@ export class AppointmentDto extends BaseDto {
 
   @IsString()
   notes: string;
+
+  @IsNumber()
+  base_price: number;
 
   @IsNumber()
   price: number;

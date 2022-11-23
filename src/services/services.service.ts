@@ -22,13 +22,21 @@ export class ServicesService extends BaseService<Service> {
     super(servicesRepository);
   }
   // override insert / update to add price to appointment
-  async upsert(model: DeepPartial<Service>): Promise<Service> {
-    const appointment = await this.appointmentService.getOne(
+  async upsert(model: DeepPartial<Service>): Promise<any> {
+    const appointment = await this.appointmentService.getOneDetails(
       model.appointmentId,
+      model.clinicId,
     );
-    appointment.price += model.price;
-    this.appointmentService.upsert(appointment);
-    return await this.servicesRepository.save(model);
+    const service = await this.servicesRepository.save(model);
+
+    const updateValues = appointment?.services.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.price,
+      appointment.base_price,
+    );
+
+    this.appointmentService.upsert({ price: updateValues });
+
+    return service;
   }
   // override delete to remove price from appointment
   async delete(id: number): Promise<DeleteResult> {
