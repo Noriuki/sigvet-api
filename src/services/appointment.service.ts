@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Appointment } from 'src/entities/appointment.entity';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { BaseService } from './base.service';
 
 @Injectable()
@@ -57,8 +57,24 @@ export class AppointmentService extends BaseService<Appointment> {
 
   async getAllByUserId(userId: number) {
     return await this.appointmentRepository.find({
+      relations: [
+        'animal',
+        'animal.species',
+        'animal.race',
+        'user',
+        'services',
+      ],
       where: {
         userId,
+      },
+    });
+  }
+
+  async getAllDetail(clinicId: number) {
+    return await this.appointmentRepository.find({
+      relations: ['animal', 'user'],
+      where: {
+        clinicId,
       },
     });
   }
