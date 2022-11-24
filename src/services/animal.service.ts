@@ -12,7 +12,14 @@ export class AnimalService extends BaseService<Animal> {
   ) {
     super(animalRepository);
   }
-
+  async getAllDetails(clinicId: number) {
+    return await this.animalRepository.find({
+      relations: ['species', 'race', 'owner'],
+      where: {
+        clinicId,
+      },
+    });
+  }
   async getOneDetails(id: number) {
     return await this.animalRepository.findOne({
       relations: ['species', 'race', 'owner'],

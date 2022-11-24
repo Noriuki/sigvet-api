@@ -2,10 +2,12 @@ import {
   IsDateString,
   IsEnum,
   IsNumber,
+  IsOptional,
   IsString,
   Length,
   Max,
   Min,
+  ValidateIf,
 } from 'class-validator';
 import { AnimalSex } from 'src/types';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
@@ -119,6 +121,7 @@ export class AnimalDto extends BaseDto {
   @Max(99)
   age: number;
 
+  @IsOptional()
   @IsDateString()
   birthDate: string;
 

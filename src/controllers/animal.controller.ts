@@ -18,6 +18,15 @@ export class AnimalController extends CreateBaseClass(AnimalDto) {
     return res.json({ success: true, result });
   }
 
+  @Get('getall/:clinicId')
+  async getAllDetails(
+    @Res() res: Response,
+    @Param('clinicId') clinicId: number,
+  ): Promise<any> {
+    const result = await this.animalService.getAllDetails(clinicId);
+    return res.json({ success: true, result });
+  }
+
   @Get('detail/:id')
   async getOneDetails(
     @Res() res: Response,
