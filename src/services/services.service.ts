@@ -23,18 +23,19 @@ export class ServicesService extends BaseService<Service> {
   }
   // override insert / update to add price to appointment
   async upsert(model: DeepPartial<Service>): Promise<any> {
+    const service = await this.servicesRepository.save(model);
+
     const appointment = await this.appointmentService.getOneDetails(
       model.appointmentId,
       model.clinicId,
     );
-    const service = await this.servicesRepository.save(model);
 
     const updateValues = appointment?.services.reduce(
       (accumulator, currentValue) => accumulator + currentValue.price,
       appointment.base_price,
     );
 
-    this.appointmentService.upsert({ price: updateValues });
+    this.appointmentService.upsert({ ...appointment, price: updateValues });
 
     return service;
   }
